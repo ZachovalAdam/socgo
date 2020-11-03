@@ -86,7 +86,6 @@ class Discover extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SightsScroller(),
                     SizedBox(
                       height: 50,
                     ),

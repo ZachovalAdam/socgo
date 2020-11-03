@@ -71,7 +71,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           Icons.remove_red_eye,
                         ),
                         onPressed: () {
-                          _toggle;
+                          _toggle();
                         },
                       )),
                   obscureText: _obscureText,
