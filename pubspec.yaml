@@ -36,11 +36,10 @@ dependencies:
   # Analytics
   firebase_analytics: ^6.0.2
 
-  # Crashlytics
-  firebase_crashlytics: ^0.2.1
+  # Storage
+  firebase_storage: ^4.0.1
 
-  # # Performance
-  firebase_performance: ^0.4.0
+  provider: ^4.3.2+1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -62,10 +61,27 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  fonts:
+    - family: Inter
+      fonts: 
+        - asset: res/fonts/Inter-Thin.ttf
+        - asset: res/fonts/Inter-SemiBold.ttf
+        - asset: res/fonts/Inter-Regular.ttf
+        - asset: res/fonts/Inter-Medium.ttf
+        - asset: res/fonts/Inter-Light.ttf
+        - asset: res/fonts/Inter-ExtraLight.ttf
+        - asset: res/fonts/Inter-ExtraBold.ttf
+        - asset: res/fonts/Inter-Bold.ttf
+        - asset: res/fonts/Inter-Black.ttf
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+
+  assets:
+    - res/img/google_g.svg
+    - res/img/facebook_f.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
