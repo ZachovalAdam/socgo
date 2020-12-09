@@ -28,7 +28,7 @@ class AuthenticationService {
           email: email, password: password);
       User user = cred.user;
       await DatabaseService(uid: user.uid)
-          .updateUserData('John', 'Doe', DateTime(1990));
+          .updateUserData('John', 'Doe', DateTime(1990), false, false);
       return "Signed up";
     } on FirebaseAuthException catch (e) {
       return e.message;

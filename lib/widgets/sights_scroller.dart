@@ -1,6 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:socgo/globals.dart';
-import 'package:socgo/screens/sightpage.dart';
+import 'package:socgo/screens/sight.dart';
 
 class SightsScroller extends StatelessWidget {
   @override
@@ -25,7 +26,7 @@ class SightsScroller extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () {
                         Route r = MaterialPageRoute(
-                            builder: (context) => Sightpage(
+                            builder: (context) => SightScreen(
                                   sight,
                                   heroTagName: sight.id,
                                 ));
@@ -99,7 +100,8 @@ class SightsScroller extends StatelessWidget {
                                                               .start,
                                                       children: [
                                                         Text(
-                                                          sight["location"],
+                                                          sight["location"]
+                                                              .toString(),
                                                           style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight

@@ -25,7 +25,7 @@ class InfoPanel extends StatelessWidget {
               child: RichText(
                   text: TextSpan(children: [
                 TextSpan(
-                    text: 'Enjoy holiday with your ',
+                    text: 'Enjoy the holidays with your ',
                     style: Theme.of(context).textTheme.headline5.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w700,
