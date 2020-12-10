@@ -10,6 +10,8 @@ final CollectionReference dbUsers =
 
 var snapshot = db.collection('users').doc(auth.currentUser.uid);
 
+getLocation() async {}
+
 Future getCurrentUserData() async {
   DocumentReference documentRefCurrentUser =
       db.collection('users').doc(auth.currentUser.uid);

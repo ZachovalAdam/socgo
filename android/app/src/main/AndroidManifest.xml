@@ -11,6 +11,10 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="SocGo!"
         android:icon="@mipmap/launcher_icon">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDeFalSZtrciEHpafkY5N6B8PsNC6Bwju4" />
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -19,9 +19,7 @@ class SightsScroller extends StatelessWidget {
                 itemBuilder: (context, index) {
                   var sight = sights[index];
                   return Container(
-                    margin: EdgeInsets.only(
-                        left: index == 0 ? 25 : 17,
-                        right: index == sights.length - 1 ? 25 : 0),
+                    margin: EdgeInsets.only(left: index == 0 ? 25 : 17, right: index == sights.length - 1 ? 25 : 0),
                     width: 205,
                     child: GestureDetector(
                       onTap: () {
@@ -48,8 +46,7 @@ class SightsScroller extends StatelessWidget {
                                         child: Hero(
                                           tag: sight.id,
                                           child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
+                                              borderRadius: BorderRadius.circular(20),
                                               child: Image.network(
                                                 sight["imageUrl"],
                                                 fit: BoxFit.cover,
@@ -60,10 +57,8 @@ class SightsScroller extends StatelessWidget {
                                         padding: EdgeInsets.all(12),
                                         child: Align(
                                           child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 sight["name"],
@@ -71,22 +66,12 @@ class SightsScroller extends StatelessWidget {
                                                     fontWeight: FontWeight.w600,
                                                     fontSize: 18,
                                                     color: Colors.white,
-                                                    shadows: [
-                                                      Shadow(
-                                                          color:
-                                                              Color(0x77000000),
-                                                          blurRadius: 3,
-                                                          offset:
-                                                              Offset(0.0, 2.0))
-                                                    ]),
+                                                    shadows: [Shadow(color: Color(0x77000000), blurRadius: 3, offset: Offset(0.0, 2.0))]),
                                               ),
                                               Row(
                                                 children: [
                                                   Padding(
-                                                    padding: EdgeInsets.only(
-                                                        left: 0,
-                                                        right: 3,
-                                                        bottom: 1),
+                                                    padding: EdgeInsets.only(left: 0, right: 3, bottom: 1),
                                                     child: Icon(
                                                       Icons.place,
                                                       size: 13,
@@ -95,31 +80,15 @@ class SightsScroller extends StatelessWidget {
                                                   ),
                                                   Flexible(
                                                     child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
                                                         Text(
-                                                          sight["location"]
-                                                              .toString(),
+                                                          sight["location"].latitude.toString() + ", " + sight["location"].longitude.toString(),
                                                           style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
+                                                              fontWeight: FontWeight.w500,
                                                               fontSize: 12,
-                                                              color:
-                                                                  Colors.white,
-                                                              shadows: [
-                                                                Shadow(
-                                                                    color: Color(
-                                                                        0x77000000),
-                                                                    blurRadius:
-                                                                        3,
-                                                                    offset:
-                                                                        Offset(
-                                                                            0.0,
-                                                                            2.0))
-                                                              ]),
+                                                              color: Colors.white,
+                                                              shadows: [Shadow(color: Color(0x77000000), blurRadius: 3, offset: Offset(0.0, 2.0))]),
                                                         )
                                                       ],
                                                     ),
@@ -135,16 +104,11 @@ class SightsScroller extends StatelessWidget {
                                   ),
                                 ),
                                 Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 7),
+                                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
                                   margin: EdgeInsets.only(top: 185),
                                   height: 45,
                                   child: Align(
-                                    child: Text(sight["description"],
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w500,
-                                            color: Color(0xFF606060))),
+                                    child: Text(sight["description"], style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Color(0xFF606060))),
                                     alignment: Alignment.topLeft,
                                   ),
                                 ),

@@ -1,16 +1,18 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:socgo/widgets/gmap.dart';
+import 'package:socgo/screens/gmapbig.dart';
 
 class SightScreen extends StatefulWidget {
-  SightScreen(this.sight, {Key key, this.title, this.heroTagName})
-      : super(key: key);
+  SightScreen(this.sight, {Key key, this.title, this.heroTagName}) : super(key: key);
 
   final String title;
   var sight;
   final String heroTagName;
 
   @override
-  _SightScreenState createState() =>
-      _SightScreenState(sight, heroTag: heroTagName);
+  _SightScreenState createState() => _SightScreenState(sight, heroTag: heroTagName);
 }
 
 class _SightScreenState extends State<SightScreen> {
@@ -36,9 +38,7 @@ class _SightScreenState extends State<SightScreen> {
                     child: Stack(
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(30.0),
-                              bottomRight: Radius.circular(30.0)),
+                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30.0), bottomRight: Radius.circular(30.0)),
                           child: Container(
                             width: double.infinity,
                             height: 500,
@@ -51,9 +51,7 @@ class _SightScreenState extends State<SightScreen> {
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(30.0),
-                                bottomRight: Radius.circular(30.0)),
+                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30.0), bottomRight: Radius.circular(30.0)),
                             child: Container(
                               width: double.infinity,
                               height: 120,
@@ -62,18 +60,13 @@ class _SightScreenState extends State<SightScreen> {
                                   return LinearGradient(
                                     begin: Alignment.bottomCenter,
                                     end: Alignment.topCenter,
-                                    colors: [
-                                      Color(0x66000000),
-                                      Colors.transparent
-                                    ],
-                                  ).createShader(Rect.fromLTRB(
-                                      0, 0, rect.width, rect.height));
+                                    colors: [Color(0x66000000), Colors.transparent],
+                                  ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
                                 },
                                 blendMode: BlendMode.dstIn,
                                 child: Container(
                                   height: 120,
-                                  decoration:
-                                      BoxDecoration(color: Colors.black),
+                                  decoration: BoxDecoration(color: Colors.black),
                                 ),
                               ),
                             ),
@@ -86,8 +79,7 @@ class _SightScreenState extends State<SightScreen> {
                             child: Padding(
                               padding: EdgeInsets.all(30),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Flexible(
                                     flex: 6,
@@ -96,19 +88,9 @@ class _SightScreenState extends State<SightScreen> {
                                       children: [
                                         Flexible(
                                             child: Text(sight["name"],
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline4
-                                                    .copyWith(
-                                                        color: Colors.white,
-                                                        shadows: [
-                                                      Shadow(
-                                                          color:
-                                                              Color(0x77000000),
-                                                          blurRadius: 3,
-                                                          offset:
-                                                              Offset(0.0, 2.0))
-                                                    ]))),
+                                                style: Theme.of(context).textTheme.headline4.copyWith(
+                                                    color: Colors.white,
+                                                    shadows: [Shadow(color: Color(0x77000000), blurRadius: 3, offset: Offset(0.0, 2.0))]))),
                                       ],
                                     ),
                                   ),
@@ -119,15 +101,12 @@ class _SightScreenState extends State<SightScreen> {
                                       children: [
                                         Flexible(
                                           child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
                                               Flexible(
                                                 child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
+                                                  mainAxisAlignment: MainAxisAlignment.center,
                                                   children: [
                                                     Flexible(
                                                       child: Icon(
@@ -143,26 +122,10 @@ class _SightScreenState extends State<SightScreen> {
                                                     ),
                                                     Flexible(
                                                       child: Text("5.0",
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: Theme.of(
-                                                                  context)
-                                                              .textTheme
-                                                              .headline5
-                                                              .copyWith(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  shadows: [
-                                                                Shadow(
-                                                                    color: Color(
-                                                                        0x77000000),
-                                                                    blurRadius:
-                                                                        3,
-                                                                    offset:
-                                                                        Offset(
-                                                                            0.0,
-                                                                            2.0))
-                                                              ])),
+                                                          textAlign: TextAlign.center,
+                                                          style: Theme.of(context).textTheme.headline5.copyWith(
+                                                              color: Colors.white,
+                                                              shadows: [Shadow(color: Color(0x77000000), blurRadius: 3, offset: Offset(0.0, 2.0))])),
                                                     ),
                                                   ],
                                                 ),
@@ -172,19 +135,9 @@ class _SightScreenState extends State<SightScreen> {
                                               ),
                                               Text("21 reviews",
                                                   textAlign: TextAlign.center,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .subtitle1
-                                                      .copyWith(
-                                                          color: Colors.white,
-                                                          shadows: [
-                                                        Shadow(
-                                                            color: Color(
-                                                                0x77000000),
-                                                            blurRadius: 3,
-                                                            offset: Offset(
-                                                                0.0, 2.0))
-                                                      ]))
+                                                  style: Theme.of(context).textTheme.subtitle1.copyWith(
+                                                      color: Colors.white,
+                                                      shadows: [Shadow(color: Color(0x77000000), blurRadius: 3, offset: Offset(0.0, 2.0))]))
                                             ],
                                           ),
                                         )
@@ -202,22 +155,75 @@ class _SightScreenState extends State<SightScreen> {
             ),
           ),
           SliverToBoxAdapter(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(25, 30, 25, 30),
+              child: SizedBox(
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(25, 30, 25, 15),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(sight['description']),
-                      ],
+                    Text(
+                      "Description",
+                      style: Theme.of(context).textTheme.headline6,
                     ),
-                  ),
+                    SizedBox(height: 10),
+                    Text(sight['description']),
+                    SizedBox(height: 30),
+                    Text(
+                      "Reviews",
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    SizedBox(height: 10),
+                    Placeholder(
+                      fallbackHeight: 195,
+                    ),
+                    SizedBox(height: 30),
+                    Text(
+                      "Gallery",
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    SizedBox(height: 10),
+                    Placeholder(
+                      fallbackHeight: 160,
+                    ),
+                    SizedBox(height: 30),
+                    Text(
+                      "Trips",
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    SizedBox(height: 10),
+                    Placeholder(
+                      fallbackHeight: 195,
+                    ),
+                    SizedBox(height: 30),
+                    Text(
+                      "Location",
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    SizedBox(height: 10),
+                    SizedBox(
+                        width: double.infinity,
+                        height: 200,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: InkWell(
+                            onTap: () {
+                              Route r = MaterialPageRoute(builder: (context) => GMapBigScreen(sight));
+                              Navigator.push(context, r);
+                            },
+                            child: IgnorePointer(
+                              child: GMap(sight),
+                              ignoring: true,
+                            ),
+                          ),
+                        )),
+                  ],
                 ),
-              ])),
+              ),
+            ),
+            SizedBox(height: 75),
+          ])),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -226,14 +232,12 @@ class _SightScreenState extends State<SightScreen> {
           width: MediaQuery.of(context).size.width - 70,
           child: Text("Make a trip", textAlign: TextAlign.center),
         ),
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(5.0))),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
       ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat,
     );
   }
 }

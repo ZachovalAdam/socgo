@@ -31,9 +31,7 @@ class Discover extends StatelessWidget {
                   child: IconButton(
                       icon: CircleAvatar(
                           backgroundColor: Colors.grey,
-                          backgroundImage: userData["pictureUrl"] != "null"
-                              ? NetworkImage(userData["pictureUrl"])
-                              : null,
+                          backgroundImage: userData["pictureUrl"] != "null" ? NetworkImage(userData["pictureUrl"]) : null,
                           radius: 16.0),
                       constraints: BoxConstraints(minWidth: 75),
                       onPressed: () => showModalBottomSheet(
@@ -48,30 +46,15 @@ class Discover extends StatelessWidget {
                                     children: [
                                       CircleAvatar(
                                         backgroundColor: Colors.grey,
-                                        backgroundImage:
-                                            userData["pictureUrl"] != "null"
-                                                ? NetworkImage(
-                                                    userData["pictureUrl"])
-                                                : null,
+                                        backgroundImage: userData["pictureUrl"] != "null" ? NetworkImage(userData["pictureUrl"]) : null,
                                       ),
                                       SizedBox(
                                         width: 15,
                                       ),
                                       Flexible(
                                         child: isProfileSetup
-                                            ? Text(
-                                                userData["firstName"] +
-                                                    " " +
-                                                    userData["lastName"],
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline6)
-                                            : Text(
-                                                FirebaseAuth
-                                                    .instance.currentUser.email,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline6),
+                                            ? Text(userData["firstName"] + " " + userData["lastName"], style: Theme.of(context).textTheme.headline6)
+                                            : Text(FirebaseAuth.instance.currentUser.email, style: Theme.of(context).textTheme.headline6),
                                       ),
                                       userData["admin"] == true
                                           ? SizedBox(
@@ -83,9 +66,7 @@ class Discover extends StatelessWidget {
                                               message: "Administrator",
                                               child: Icon(
                                                 Icons.verified_user,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .primary,
+                                                color: Theme.of(context).colorScheme.primary,
                                                 size: 18,
                                               ),
                                             )
@@ -99,18 +80,11 @@ class Discover extends StatelessWidget {
                                         leading: Container(
                                           child: Icon(
                                             Icons.people_outlined,
-                                            color: Theme.of(context)
-                                                .iconTheme
-                                                .color,
+                                            color: Theme.of(context).iconTheme.color,
                                           ),
                                           padding: EdgeInsets.only(left: 10),
                                         ),
-                                        title: Text('Friends',
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .headline6
-                                                    .color)),
+                                        title: Text('Friends', style: TextStyle(color: Theme.of(context).textTheme.headline6.color)),
                                         onTap: () {
                                           print('friends');
                                         },
@@ -121,18 +95,11 @@ class Discover extends StatelessWidget {
                                         leading: Container(
                                           child: Icon(
                                             Icons.tour_outlined,
-                                            color: Theme.of(context)
-                                                .iconTheme
-                                                .color,
+                                            color: Theme.of(context).iconTheme.color,
                                           ),
                                           padding: EdgeInsets.only(left: 10),
                                         ),
-                                        title: Text('Trips',
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .headline6
-                                                    .color)),
+                                        title: Text('Trips', style: TextStyle(color: Theme.of(context).textTheme.headline6.color)),
                                         onTap: () {
                                           print('trips');
                                         },
@@ -143,18 +110,11 @@ class Discover extends StatelessWidget {
                                         leading: Container(
                                           child: Icon(
                                             Icons.settings_outlined,
-                                            color: Theme.of(context)
-                                                .iconTheme
-                                                .color,
+                                            color: Theme.of(context).iconTheme.color,
                                           ),
                                           padding: EdgeInsets.only(left: 10),
                                         ),
-                                        title: Text('Settings',
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .headline6
-                                                    .color)),
+                                        title: Text('Settings', style: TextStyle(color: Theme.of(context).textTheme.headline6.color)),
                                         onTap: () {
                                           print('settings');
                                         },
@@ -165,18 +125,11 @@ class Discover extends StatelessWidget {
                                         leading: Container(
                                           child: Icon(
                                             Icons.admin_panel_settings_outlined,
-                                            color: Theme.of(context)
-                                                .iconTheme
-                                                .color,
+                                            color: Theme.of(context).iconTheme.color,
                                           ),
                                           padding: EdgeInsets.only(left: 10),
                                         ),
-                                        title: Text('Admin Panel',
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .headline6
-                                                    .color)),
+                                        title: Text('Admin Panel', style: TextStyle(color: Theme.of(context).textTheme.headline6.color)),
                                         onTap: () {
                                           print('admin panel');
                                         },
@@ -190,16 +143,9 @@ class Discover extends StatelessWidget {
                                     ),
                                     padding: EdgeInsets.only(left: 10),
                                   ),
-                                  title: Text('Sign out',
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .textTheme
-                                              .headline6
-                                              .color)),
+                                  title: Text('Sign out', style: TextStyle(color: Theme.of(context).textTheme.headline6.color)),
                                   onTap: () {
-                                    context
-                                        .read<AuthenticationService>()
-                                        .signOut();
+                                    context.read<AuthenticationService>().signOut();
                                     Navigator.pop(context, true);
                                     print('sign out');
                                   },
@@ -228,10 +174,7 @@ class Discover extends StatelessWidget {
                             padding: EdgeInsets.fromLTRB(25, 30, 25, 15),
                             child: Container(
                                 width: double.infinity,
-                                decoration: BoxDecoration(
-                                    color: Color(0xFFF8E153),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10))),
+                                decoration: BoxDecoration(color: Color(0xFFF8E153), borderRadius: BorderRadius.all(Radius.circular(10))),
                                 child: Padding(
                                   padding: EdgeInsets.all(20),
                                   child: Column(children: [
@@ -242,17 +185,9 @@ class Discover extends StatelessWidget {
                                     RichText(
                                       text: TextSpan(children: [
                                         TextSpan(
-                                            text:
-                                                "Your profile hasn't been set up yet. You won't have access to any features of the app until it's setup.",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText2),
-                                        TextSpan(
-                                            text:
-                                                " Click here to set up your profile.",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText1),
+                                            text: "Your profile hasn't been set up yet. You won't have access to any features of the app until it's setup.",
+                                            style: Theme.of(context).textTheme.bodyText2),
+                                        TextSpan(text: " Click here to set up your profile.", style: Theme.of(context).textTheme.bodyText1),
                                       ]),
                                     )
                                   ]),
@@ -267,10 +202,7 @@ class Discover extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Greeting(),
-                                  Text(userData["firstName"],
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline3),
+                                  Text(userData["firstName"], style: Theme.of(context).textTheme.headline3),
                                 ],
                               ),
                             ),
@@ -286,8 +218,7 @@ class Discover extends StatelessWidget {
                             SizedBox(
                               height: 40,
                             ),
-                            Text('Best in -',
-                                style: Theme.of(context).textTheme.headline5),
+                            Text('Best in ' + getLocation().toString(), style: Theme.of(context).textTheme.headline5),
                           ],
                         ),
                       ),
@@ -301,8 +232,7 @@ class Discover extends StatelessWidget {
                               itemCount: 2,
                               itemBuilder: (context, index) {
                                 return Container(
-                                  margin: EdgeInsets.only(
-                                      left: index == 0 ? 25 : 0, right: 25),
+                                  margin: EdgeInsets.only(left: index == 0 ? 25 : 0, right: 25),
                                   width: 205,
                                   child: GestureDetector(
                                     onTap: null,
@@ -321,57 +251,34 @@ class Discover extends StatelessWidget {
                                                       width: double.infinity,
                                                       child: Hero(
                                                         tag: 'notsetup',
-                                                        child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        20),
-                                                            child: Container(
-                                                                color: Colors
-                                                                    .grey)),
+                                                        child: ClipRRect(borderRadius: BorderRadius.circular(20), child: Container(color: Colors.grey)),
                                                       ),
                                                     ),
                                                     Padding(
-                                                      padding:
-                                                          EdgeInsets.all(12),
+                                                      padding: EdgeInsets.all(12),
                                                       child: Align(
                                                         child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .end,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                          mainAxisAlignment: MainAxisAlignment.end,
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
                                                           children: [
                                                             Container(),
                                                             Container(),
                                                           ],
                                                         ),
-                                                        alignment: Alignment
-                                                            .bottomLeft,
+                                                        alignment: Alignment.bottomLeft,
                                                       ),
                                                     )
                                                   ],
                                                 ),
                                               ),
                                               Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 12,
-                                                    vertical: 7),
-                                                margin:
-                                                    EdgeInsets.only(top: 185),
+                                                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+                                                margin: EdgeInsets.only(top: 185),
                                                 height: 45,
                                                 child: Align(
                                                   child: index == 0
-                                                      ? Text(
-                                                          "Set up your profile to continue.",
-                                                          style: TextStyle(
-                                                              fontSize: 13,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              color: Color(
-                                                                  0xFF606060)))
+                                                      ? Text("Set up your profile to continue.",
+                                                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Color(0xFF606060)))
                                                       : Container(),
                                                   alignment: Alignment.topLeft,
                                                 ),
@@ -396,8 +303,7 @@ class Discover extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Popular worldwide',
-                                style: Theme.of(context).textTheme.headline5),
+                            Text('Popular worldwide', style: Theme.of(context).textTheme.headline5),
                           ],
                         ),
                       ),
