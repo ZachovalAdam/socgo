@@ -1,7 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:socgo/globals.dart';
 import 'package:socgo/screens/sight.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class SightsScroller extends StatelessWidget {
   @override
@@ -13,7 +14,7 @@ class SightsScroller extends StatelessWidget {
             var sights = snapshot.data.documents;
             return Container(
               width: double.infinity,
-              height: 230,
+              height: 300,
               child: ListView.builder(
                 itemCount: sights.length,
                 itemBuilder: (context, index) {
@@ -21,7 +22,8 @@ class SightsScroller extends StatelessWidget {
                   return Container(
                     margin: EdgeInsets.only(left: index == 0 ? 25 : 17, right: index == sights.length - 1 ? 25 : 0),
                     width: 205,
-                    child: GestureDetector(
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(20),
                       onTap: () {
                         Route r = MaterialPageRoute(
                             builder: (context) => SightScreen(
@@ -33,28 +35,60 @@ class SightsScroller extends StatelessWidget {
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: Container(
-                            color: Color(0xFFF5F5F5),
+                            color: Theme.of(context).cardTheme.color,
                             child: Stack(
                               children: [
                                 Container(
-                                  height: 185,
+                                  height: 300,
                                   child: Stack(
                                     children: [
                                       Container(
-                                        height: 185,
+                                        height: 300,
                                         width: double.infinity,
                                         child: Hero(
                                           tag: sight.id,
                                           child: ClipRRect(
                                               borderRadius: BorderRadius.circular(20),
-                                              child: Image.network(
-                                                sight["imageUrl"],
+                                              child: CachedNetworkImage(
+                                                imageUrl: sight["imageUrl"],
                                                 fit: BoxFit.cover,
+                                                progressIndicatorBuilder: (context, url, downloadProgress) => Container(
+                                                  child: Center(
+                                                    child: CircularProgressIndicator(),
+                                                  ),
+                                                  height: 20,
+                                                  width: 20,
+                                                ),
+                                                errorWidget: (context, url, error) => Icon(FeatherIcons.alertCircle),
                                               )),
                                         ),
                                       ),
+                                      Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20.0), bottomRight: Radius.circular(20.0)),
+                                          child: Container(
+                                            width: double.infinity,
+                                            height: 120,
+                                            child: ShaderMask(
+                                              shaderCallback: (rect) {
+                                                return LinearGradient(
+                                                  begin: Alignment.bottomCenter,
+                                                  end: Alignment.topCenter,
+                                                  colors: [Color(0x77000000), Colors.transparent],
+                                                ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
+                                              },
+                                              blendMode: BlendMode.dstIn,
+                                              child: Container(
+                                                height: 120,
+                                                decoration: BoxDecoration(color: Colors.black),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                       Padding(
-                                        padding: EdgeInsets.all(12),
+                                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 22),
                                         child: Align(
                                           child: Column(
                                             mainAxisAlignment: MainAxisAlignment.end,
@@ -63,19 +97,24 @@ class SightsScroller extends StatelessWidget {
                                               Text(
                                                 sight["name"],
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 18,
-                                                    color: Colors.white,
-                                                    shadows: [Shadow(color: Color(0x77000000), blurRadius: 3, offset: Offset(0.0, 2.0))]),
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 20,
+                                                  color: Colors.white,
+                                                ),
+                                                maxLines: 8,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              SizedBox(
+                                                height: 5,
                                               ),
                                               Row(
                                                 children: [
                                                   Padding(
-                                                    padding: EdgeInsets.only(left: 0, right: 3, bottom: 1),
+                                                    padding: EdgeInsets.only(left: 0, right: 3, bottom: 0),
                                                     child: Icon(
                                                       Icons.place,
                                                       size: 13,
-                                                      color: Colors.white,
+                                                      color: Color(0xBBFFFFFF),
                                                     ),
                                                   ),
                                                   Flexible(
@@ -83,13 +122,15 @@ class SightsScroller extends StatelessWidget {
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
                                                         Text(
-                                                          sight["location"].latitude.toString() + ", " + sight["location"].longitude.toString(),
-                                                          style: TextStyle(
+                                                            //sight["location"].latitude.toString() + ", " + sight["location"].longitude.toString(),
+                                                            "Placeholder location",
+                                                            style: TextStyle(
                                                               fontWeight: FontWeight.w500,
-                                                              fontSize: 12,
-                                                              color: Colors.white,
-                                                              shadows: [Shadow(color: Color(0x77000000), blurRadius: 3, offset: Offset(0.0, 2.0))]),
-                                                        )
+                                                              fontSize: 14,
+                                                              color: Color(0xBBFFFFFF),
+                                                            ),
+                                                            maxLines: 3,
+                                                            overflow: TextOverflow.ellipsis)
                                                       ],
                                                     ),
                                                   ),
@@ -101,15 +142,6 @@ class SightsScroller extends StatelessWidget {
                                         ),
                                       )
                                     ],
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-                                  margin: EdgeInsets.only(top: 185),
-                                  height: 45,
-                                  child: Align(
-                                    child: Text(sight["description"], style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Color(0xFF606060))),
-                                    alignment: Alignment.topLeft,
                                   ),
                                 ),
                               ],

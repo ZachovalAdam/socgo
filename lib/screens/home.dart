@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:socgo/widgets/discover.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -24,7 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        //resizeToAvoidBottomInset: false,
+        backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
           toolbarHeight: 0,
           elevation: 0,
@@ -34,24 +36,25 @@ class _HomeScreenState extends State<HomeScreen> {
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          selectedLabelStyle:
-              TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           unselectedLabelStyle: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 14,
           ),
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.place),
+              icon: Icon(FeatherIcons.mapPin),
               label: 'Discover',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search),
+              icon: Icon(FeatherIcons.search),
               label: 'Search',
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Theme.of(context).colorScheme.primary,
+          //selectedItemColor: Theme.of(context).colorScheme.primary,
           onTap: _onItemTapped,
         ));
   }

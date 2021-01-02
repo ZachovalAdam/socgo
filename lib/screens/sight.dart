@@ -1,8 +1,11 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:socgo/widgets/gmap.dart';
 import 'package:socgo/screens/gmapbig.dart';
+import 'package:socgo/widgets/trips_list.dart';
 
 class SightScreen extends StatefulWidget {
   SightScreen(this.sight, {Key key, this.title, this.heroTagName}) : super(key: key);
@@ -28,30 +31,34 @@ class _SightScreenState extends State<SightScreen> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            expandedHeight: 468,
+            expandedHeight: 248,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.parallax,
               background: Container(
                 child: Hero(
-                    tag: heroTagName,
+                  tag: heroTagName,
+                  child: ClipRRect(
                     child: Stack(
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30.0), bottomRight: Radius.circular(30.0)),
-                          child: Container(
+                        Container(
                             width: double.infinity,
-                            height: 500,
-                            child: Image.network(
-                              sight['imageUrl'],
+                            height: 280,
+                            child: CachedNetworkImage(
+                              imageUrl: sight["imageUrl"],
                               fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
+                              progressIndicatorBuilder: (context, url, downloadProgress) => Container(
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                                height: 20,
+                                width: 20,
+                              ),
+                              errorWidget: (context, url, error) => Icon(FeatherIcons.alertCircle),
+                            )),
                         Align(
                           alignment: Alignment.bottomCenter,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30.0), bottomRight: Radius.circular(30.0)),
+                          child: ClipRect(
                             child: Container(
                               width: double.infinity,
                               height: 120,
@@ -60,97 +67,45 @@ class _SightScreenState extends State<SightScreen> {
                                   return LinearGradient(
                                     begin: Alignment.bottomCenter,
                                     end: Alignment.topCenter,
-                                    colors: [Color(0x66000000), Colors.transparent],
+                                    colors: [Color(0xFF000000), Colors.transparent],
                                   ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
                                 },
                                 blendMode: BlendMode.dstIn,
                                 child: Container(
                                   height: 120,
-                                  decoration: BoxDecoration(color: Colors.black),
+                                  decoration: BoxDecoration(color: MediaQuery.platformBrightnessOf(context) == Brightness.dark ? Colors.black : Colors.white),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        Container(
-                          height: 500,
-                          child: Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Padding(
-                              padding: EdgeInsets.all(30),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Flexible(
-                                    flex: 6,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Flexible(
-                                            child: Text(sight["name"],
-                                                style: Theme.of(context).textTheme.headline4.copyWith(
-                                                    color: Colors.white,
-                                                    shadows: [Shadow(color: Color(0x77000000), blurRadius: 3, offset: Offset(0.0, 2.0))]))),
-                                      ],
-                                    ),
-                                  ),
-                                  Flexible(
-                                    flex: 3,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Flexible(
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              Flexible(
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    Flexible(
-                                                      child: Icon(
-                                                        Icons.star,
-                                                        color: Colors.yellow,
-                                                        size: 32,
-                                                      ),
-                                                    ),
-                                                    Flexible(
-                                                      child: SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                    ),
-                                                    Flexible(
-                                                      child: Text("5.0",
-                                                          textAlign: TextAlign.center,
-                                                          style: Theme.of(context).textTheme.headline5.copyWith(
-                                                              color: Colors.white,
-                                                              shadows: [Shadow(color: Color(0x77000000), blurRadius: 3, offset: Offset(0.0, 2.0))])),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text("21 reviews",
-                                                  textAlign: TextAlign.center,
-                                                  style: Theme.of(context).textTheme.subtitle1.copyWith(
-                                                      color: Colors.white,
-                                                      shadows: [Shadow(color: Color(0x77000000), blurRadius: 3, offset: Offset(0.0, 2.0))]))
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: ClipRect(
+                            child: Container(
+                              width: double.infinity,
+                              height: 120,
+                              child: ShaderMask(
+                                shaderCallback: (rect) {
+                                  return LinearGradient(
+                                    begin: Alignment.bottomCenter,
+                                    end: Alignment.topCenter,
+                                    colors: [Colors.transparent, Color(0x77000000)],
+                                  ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
+                                },
+                                blendMode: BlendMode.dstIn,
+                                child: Container(
+                                  height: 120,
+                                  decoration: BoxDecoration(color: MediaQuery.platformBrightnessOf(context) == Brightness.dark ? Colors.black : Colors.white),
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ],
-                    )),
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
@@ -163,11 +118,29 @@ class _SightScreenState extends State<SightScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Description",
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
+                    Text(sight["name"], style: Theme.of(context).textTheme.headline4),
                     SizedBox(height: 10),
+                    Text("Placeholder location",
+                        style: Theme.of(context).textTheme.subtitle1.copyWith(color: Theme.of(context).textTheme.headline1.color.withOpacity(0.7))),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.star,
+                                color: Colors.orange,
+                              ),
+                              Text(" 5.0", style: Theme.of(context).textTheme.headline6),
+                            ],
+                          ),
+                        ),
+                        Flexible(child: Text("24 reviews", style: Theme.of(context).textTheme.headline6)),
+                      ],
+                    ),
+                    SizedBox(height: 20),
                     Text(sight['description']),
                     SizedBox(height: 30),
                     Text(
@@ -193,8 +166,11 @@ class _SightScreenState extends State<SightScreen> {
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     SizedBox(height: 10),
-                    Placeholder(
-                      fallbackHeight: 195,
+                    SizedBox(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: TripsList(sight.id),
+                      ),
                     ),
                     SizedBox(height: 30),
                     Text(
@@ -222,21 +198,29 @@ class _SightScreenState extends State<SightScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 75),
+            SizedBox(height: 60),
           ])),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: Container(
-          width: MediaQuery.of(context).size.width - 70,
-          child: Text("Make a trip", textAlign: TextAlign.center),
-        ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-        elevation: 0,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Colors.white,
-      ),
+      floatingActionButton: Builder(builder: (BuildContext context) {
+        return FloatingActionButton.extended(
+          onPressed: () {
+            Scaffold.of(context).showSnackBar(SnackBar(content: Text("This feature is not implemented yet.")));
+          },
+          label: Container(
+            width: MediaQuery.of(context).size.width - 88,
+            child: Text(
+              "Make a trip",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.subtitle1.copyWith(color: Colors.white),
+            ),
+          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
+          elevation: 0,
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          foregroundColor: Colors.white,
+        );
+      }),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat,
     );
   }

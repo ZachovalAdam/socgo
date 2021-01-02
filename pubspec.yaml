@@ -1,5 +1,5 @@
 name: socgo
-description: A new Flutter project.
+description: A social travelling project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -23,6 +23,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  flutter_feather_icons: 
+  cached_network_image: ^2.5.0
+  simple_moment: ^1.0.7
 
   firebase_core: ^0.5.0
 
@@ -92,6 +96,8 @@ flutter:
   assets:
     - res/img/google_g.svg
     - res/img/facebook_f.png
+    - res/map_themes/dark.json
+    - res/map_themes/light.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
