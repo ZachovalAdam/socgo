@@ -1,14 +1,17 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:socgo/apptheme.dart';
 import 'package:socgo/screens/home.dart';
 import 'package:socgo/screens/signin.dart';
 import 'package:socgo/services/authentication_service.dart';
-import 'package:socgo/globals.dart';
+import 'package:socgo/services/geolocator_service.dart';
 
 FirebaseAnalytics analytics;
 
@@ -23,10 +26,12 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final locatorService = GeolocatorService();
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        FutureProvider(create: (context) => locatorService.getLocation()),
         Provider<AuthenticationService>(
           create: (_) => AuthenticationService(FirebaseAuth.instance),
         ),

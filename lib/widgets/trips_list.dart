@@ -57,9 +57,12 @@ class TripsList extends StatelessWidget {
                                             ),
                                       ],
                                     ),
-                                    Flexible(
-                                      child: Text(Moment.now().from(trip["date"].toDate())),
+                                    Expanded(child: Container()),
+                                    Text(
+                                      Moment.now().from(trip["date"].toDate()),
                                     ),
+                                    SizedBox(width: 10),
+                                    trip["open"] ? Icon(FeatherIcons.checkCircle) : Icon(FeatherIcons.xCircle),
                                   ],
                                 ),
                                 onTap: () {

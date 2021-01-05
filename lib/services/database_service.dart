@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DatabaseService {
   final String uid;
@@ -8,7 +9,7 @@ class DatabaseService {
 
   final CollectionReference sightsCollection = FirebaseFirestore.instance.collection('sights');
 
-  Future updateUserData(String firstName, String lastName, DateTime birthDate, bool admin, bool setup, String pictureUrl, String id) async {
+  Future updateUserData(String firstName, String lastName, DateTime birthDate, bool admin, bool setup, String pictureUrl, String id, List friends) async {
     return await usersCollection.doc(uid).set({
       'firstName': firstName,
       'lastName': lastName,
@@ -17,6 +18,7 @@ class DatabaseService {
       'setup': setup,
       'pictureUrl': pictureUrl,
       'id': id,
+      'friends': friends,
     });
   }
 }

@@ -49,11 +49,13 @@ class InfoPanel extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          height: 170,
-          width: double.infinity,
-          color: Color(0x44000000),
-        ),
+        ClipRRect(
+            child: Container(
+              height: 170,
+              width: double.infinity,
+              color: Color(0x44000000),
+            ),
+            borderRadius: BorderRadius.circular(20.0)),
         Container(
           height: 170,
           child: Padding(
@@ -70,8 +72,11 @@ class InfoPanel extends StatelessWidget {
                   height: 4,
                 ),
                 Flexible(
-                  child: Text(randomInfo['subtitle'],
-                      style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w500, color: Color(0xDDFFFFFF))),
+                  child: Text(
+                    randomInfo['subtitle'],
+                    style: Theme.of(context).textTheme.subtitle1.copyWith(fontWeight: FontWeight.w500, color: Color(0xDDFFFFFF)),
+                    textScaleFactor: 1,
+                  ),
                 ),
               ],
             ),

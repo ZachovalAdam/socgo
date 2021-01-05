@@ -27,6 +27,7 @@ dependencies:
   flutter_feather_icons: 
   cached_network_image: ^2.5.0
   simple_moment: ^1.0.7
+  flutter_svg: ^0.19.0
 
   firebase_core: ^0.5.0
 
@@ -46,6 +47,7 @@ dependencies:
   provider: ^4.3.2+1
 
   geoflutterfire: ^2.2.1
+  geocoder: ^0.2.1
   geolocator: 6.1.13
   google_maps_flutter: ^1.0.6
 

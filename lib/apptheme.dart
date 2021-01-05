@@ -27,8 +27,11 @@ class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     visualDensity: VisualDensity.adaptivePlatformDensity,
     scaffoldBackgroundColor: Colors.white,
-    dialogTheme: const DialogTheme(
-      backgroundColor: Colors.white,
+    dialogTheme: DialogTheme(
+      backgroundColor: brandingSurfaceLight,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
       elevation: 0.0,
     ),
     accentColor: brandingPrimary,
@@ -51,7 +54,7 @@ class AppTheme {
     ),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
-        textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(fontWeight: FontWeight.w500)),
+        textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(fontWeight: FontWeight.w500, fontFamily: "Inter")),
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -59,7 +62,8 @@ class AppTheme {
         elevation: MaterialStateProperty.all<double>(0.0),
         shape: MaterialStateProperty.all<OutlinedBorder>(const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0)))),
         backgroundColor: MaterialStateProperty.all<Color>(brandingPrimary),
-        textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(color: Colors.white, fontWeight: FontWeight.w500)),
+        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+        textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontFamily: "Inter")),
       ),
     ),
     colorScheme: ColorScheme.light(
@@ -76,17 +80,29 @@ class AppTheme {
         borderRadius: BorderRadius.circular(10.0),
       ),
     ),
+    cursorColor: Colors.black,
     dividerColor: const Color(0xffe9e9e9),
     fontFamily: 'Inter',
     iconTheme: const IconThemeData(
       color: Colors.black,
     ),
-    inputDecorationTheme: const InputDecorationTheme(
-      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(4)), borderSide: BorderSide(color: Color(0xffe9e9e9), width: 2)),
-      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(4)), borderSide: BorderSide(color: brandingPrimary, width: 2)),
+    inputDecorationTheme: InputDecorationTheme(
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        borderSide: BorderSide(width: 0, color: Colors.transparent),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        borderSide: BorderSide(width: 0, color: Colors.transparent),
+      ),
+      contentPadding: EdgeInsets.all(15),
+      labelStyle: TextStyle(color: Color(0xFF666666), fontSize: 16.0),
+      border: InputBorder.none,
       hintStyle: TextStyle(
         fontWeight: FontWeight.w500,
       ),
+      fillColor: brandingSurfaceLight,
+      filled: true,
     ),
     primarySwatch: brandingPrimaryMaterial,
     snackBarTheme: const SnackBarThemeData(
@@ -140,8 +156,11 @@ class AppTheme {
   static final ThemeData darkTheme = ThemeData(
     visualDensity: VisualDensity.adaptivePlatformDensity,
     scaffoldBackgroundColor: Colors.black,
-    dialogTheme: const DialogTheme(
-      backgroundColor: Colors.black,
+    dialogTheme: DialogTheme(
+      backgroundColor: brandingSurfaceDark,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
       elevation: 0.0,
     ),
     accentColor: brandingPrimary,
@@ -161,7 +180,7 @@ class AppTheme {
     ),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
-        textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(fontWeight: FontWeight.w500)),
+        textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(fontWeight: FontWeight.w500, fontFamily: "Inter")),
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -169,7 +188,8 @@ class AppTheme {
         elevation: MaterialStateProperty.all<double>(0.0),
         shape: MaterialStateProperty.all<OutlinedBorder>(const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0)))),
         backgroundColor: MaterialStateProperty.all<Color>(brandingPrimary),
-        textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(color: Colors.white, fontWeight: FontWeight.w500)),
+        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+        textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontFamily: "Inter")),
       ),
     ),
     colorScheme: ColorScheme.dark(
@@ -186,17 +206,29 @@ class AppTheme {
         borderRadius: BorderRadius.circular(10.0),
       ),
     ),
+    cursorColor: Colors.white,
     dividerColor: const Color(0xff141414),
     fontFamily: 'Inter',
     iconTheme: const IconThemeData(
       color: Colors.white,
     ),
-    inputDecorationTheme: const InputDecorationTheme(
-      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(4)), borderSide: BorderSide(color: Color(0xff141414), width: 2)),
-      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(4)), borderSide: BorderSide(color: brandingPrimary, width: 2)),
+    inputDecorationTheme: InputDecorationTheme(
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        borderSide: BorderSide(width: 0, color: Colors.transparent),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        borderSide: BorderSide(width: 0, color: Colors.transparent),
+      ),
+      contentPadding: EdgeInsets.all(15),
+      labelStyle: TextStyle(color: Color(0xFFA4A4A4), fontSize: 16.0),
+      border: InputBorder.none,
       hintStyle: TextStyle(
         fontWeight: FontWeight.w500,
       ),
+      fillColor: brandingSurfaceDark,
+      filled: true,
     ),
     primarySwatch: brandingPrimaryMaterial,
     snackBarTheme: const SnackBarThemeData(

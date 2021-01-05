@@ -36,11 +36,22 @@ class _UserButtonState extends State<UserButton> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        CircleAvatar(
-          maxRadius: avatarSize,
-          backgroundImage: CachedNetworkImageProvider(userData["pictureUrl"]),
-          backgroundColor: Colors.grey,
+        Theme(
+          data: Theme.of(context).copyWith(
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+          ),
+          child: InkWell(
+              child: CircleAvatar(
+                maxRadius: avatarSize,
+                backgroundImage: CachedNetworkImageProvider(userData["pictureUrl"]),
+                backgroundColor: Colors.grey,
+              ),
+              onTap: () {
+                print("goto profile");
+              }),
         ),
         SizedBox(
           width: avatarPadding,
@@ -55,7 +66,7 @@ class _UserButtonState extends State<UserButton> {
                   child: Icon(
                     Icons.verified_user,
                     color: Theme.of(context).colorScheme.primary,
-                    size: 18,
+                    size: textStyle.fontSize / 100 * 90,
                   ),
                 ),
                 padding: EdgeInsets.only(left: 5),
@@ -69,7 +80,7 @@ class _UserButtonState extends State<UserButton> {
                       child: Icon(
                         Icons.star,
                         color: Colors.orange,
-                        size: 18,
+                        size: textStyle.fontSize / 100 * 90,
                       ),
                     ),
                     padding: EdgeInsets.only(left: 5),

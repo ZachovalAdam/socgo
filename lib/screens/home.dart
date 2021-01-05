@@ -36,11 +36,11 @@ class _HomeScreenState extends State<HomeScreen> {
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          /*selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           unselectedLabelStyle: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 14,
-          ),
+          ),*/
           showSelectedLabels: false,
           showUnselectedLabels: false,
           items: const <BottomNavigationBarItem>[

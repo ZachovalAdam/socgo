@@ -1,15 +1,14 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:socgo/screens/create_account.dart';
 import 'package:socgo/services/authentication_service.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-class SignInScreen extends StatefulWidget {
+class CreateAccountScreen extends StatefulWidget {
   @override
-  _SignInScreenState createState() => _SignInScreenState();
+  _CreateAccountScreenState createState() => _CreateAccountScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _CreateAccountScreenState extends State<CreateAccountScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController pwController = TextEditingController();
 
@@ -74,11 +73,6 @@ class _SignInScreenState extends State<SignInScreen> {
                         suffixIcon: IconButton(
                           icon: Icon(
                             Icons.remove_red_eye,
-                            color: _obscureText
-                                ? MediaQuery.platformBrightnessOf(context) == Brightness.dark
-                                    ? Color(0x99FFFFFF)
-                                    : Color(0x99000000)
-                                : Theme.of(context).colorScheme.primary,
                           ),
                           onPressed: () {
                             _toggle();
@@ -101,62 +95,16 @@ class _SignInScreenState extends State<SignInScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: OutlinedButton(
-                            onPressed: () {
-                              context.read<AuthenticationService>().signInGoogle().then((m) => {
-                                    if (m != "Success")
-                                      {
-                                        showDialog(
-                                            context: context,
-                                            builder: (_) => AlertDialog(
-                                                  title: Text("Error while logging in"),
-                                                  content: Text(m),
-                                                  actions: [
-                                                    FlatButton(
-                                                      child: Text("Ok"),
-                                                      onPressed: () {
-                                                        Navigator.pop(context, true);
-                                                      },
-                                                    )
-                                                  ],
-                                                )),
-                                        pwController.text = ""
-                                      }
-                                  });
-                            },
-                            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                              SvgPicture.asset(
-                                "res/img/google_g.svg",
-                                height: 20,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text("Google"),
-                            ]),
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.background),
-                              foregroundColor: MaterialStateProperty.all<Color>(Theme.of(context).textTheme.headline1.color),
-                            )),
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: Text("Google"),
+                        ),
                       ),
                       SizedBox(width: 10),
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {},
-                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                            Image.asset(
-                              "res/img/facebook_f.png",
-                              height: 20,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text("Facebook"),
-                          ]),
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF1877F2)),
-                            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                          ),
+                          child: Text("Facebook"),
                         ),
                       ),
                     ],
@@ -169,8 +117,10 @@ class _SignInScreenState extends State<SignInScreen> {
                     children: [
                       TextButton(
                         onPressed: () {
-                          Route r = MaterialPageRoute(builder: (context) => CreateAccountScreen());
-                          Navigator.push(context, r);
+                          context.read<AuthenticationService>().signUp(
+                                email: emailController.text.trim(),
+                                password: pwController.text.trim(),
+                              );
                         },
                         child: Text("Create account"),
                       ),
@@ -206,6 +156,31 @@ class _SignInScreenState extends State<SignInScreen> {
                         child: Text("Sign in"),
                       ),
                     ],
+                  ),
+                  ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: 80.0),
+                    child: Center(
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(children: [
+                          TextSpan(
+                            text: "By proceeding, you agree to SocGo!'s Privacy Policy and Terms of Service. ",
+                            style: Theme.of(context).textTheme.caption,
+                          ),
+                          TextSpan(
+                            text: "See more.",
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                print("See more");
+                              },
+                            style: Theme.of(context)
+                                .textTheme
+                                .caption
+                                .copyWith(color: Theme.of(context).colorScheme.primary, decoration: TextDecoration.underline),
+                          ),
+                        ]),
+                      ),
+                    ),
                   ),
                 ],
               ),

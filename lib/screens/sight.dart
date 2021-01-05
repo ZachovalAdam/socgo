@@ -1,32 +1,39 @@
 import 'dart:ui';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:socgo/screens/create_trip.dart';
 import 'package:socgo/widgets/gmap.dart';
 import 'package:socgo/screens/gmapbig.dart';
 import 'package:socgo/widgets/trips_list.dart';
+import 'package:socgo/widgets/reviews_list.dart';
 
 class SightScreen extends StatefulWidget {
-  SightScreen(this.sight, {Key key, this.title, this.heroTagName}) : super(key: key);
+  SightScreen(this.sight, this.addr, {Key key, this.title, this.heroTagName}) : super(key: key);
 
   final String title;
   var sight;
+  Address addr;
   final String heroTagName;
 
   @override
-  _SightScreenState createState() => _SightScreenState(sight, heroTag: heroTagName);
+  _SightScreenState createState() => _SightScreenState(sight, addr, heroTag: heroTagName);
 }
 
 class _SightScreenState extends State<SightScreen> {
   var sight;
+  Address addr;
   String heroTagName;
-  _SightScreenState(var s, {String heroTag}) {
+  _SightScreenState(var s, Address a, {String heroTag}) {
     sight = s;
+    addr = a;
     heroTagName = heroTag;
   }
   @override
   Widget build(BuildContext context) {
+    var rating = sight["reviews"].length > 0 ? sight["reviews"].map((r) => r["rating"]).reduce((a, b) => a + b) / sight["reviews"].length : "-";
+
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
@@ -120,7 +127,7 @@ class _SightScreenState extends State<SightScreen> {
                   children: [
                     Text(sight["name"], style: Theme.of(context).textTheme.headline4),
                     SizedBox(height: 10),
-                    Text("Placeholder location",
+                    Text(addr.locality + ", " + addr.countryName,
                         style: Theme.of(context).textTheme.subtitle1.copyWith(color: Theme.of(context).textTheme.headline1.color.withOpacity(0.7))),
                     SizedBox(height: 20),
                     Row(
@@ -133,11 +140,12 @@ class _SightScreenState extends State<SightScreen> {
                                 Icons.star,
                                 color: Colors.orange,
                               ),
-                              Text(" 5.0", style: Theme.of(context).textTheme.headline6),
+                              SizedBox(width: 5),
+                              Text(rating == 0 ? "-" : rating.toString(), style: Theme.of(context).textTheme.headline6),
                             ],
                           ),
                         ),
-                        Flexible(child: Text("24 reviews", style: Theme.of(context).textTheme.headline6)),
+                        Flexible(child: Text(sight["reviews"].length.toString() + " reviews", style: Theme.of(context).textTheme.headline6)),
                       ],
                     ),
                     SizedBox(height: 20),
@@ -148,8 +156,11 @@ class _SightScreenState extends State<SightScreen> {
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     SizedBox(height: 10),
-                    Placeholder(
-                      fallbackHeight: 195,
+                    SizedBox(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: ReviewsList(sight),
+                      ),
                     ),
                     SizedBox(height: 30),
                     Text(
@@ -205,7 +216,8 @@ class _SightScreenState extends State<SightScreen> {
       floatingActionButton: Builder(builder: (BuildContext context) {
         return FloatingActionButton.extended(
           onPressed: () {
-            Scaffold.of(context).showSnackBar(SnackBar(content: Text("This feature is not implemented yet.")));
+            Route r = MaterialPageRoute(builder: (context) => CreateTripScreen(sight));
+            Navigator.push(context, r);
           },
           label: Container(
             width: MediaQuery.of(context).size.width - 88,
