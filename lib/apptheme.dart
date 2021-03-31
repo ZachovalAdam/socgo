@@ -4,25 +4,26 @@ class AppTheme {
   AppTheme._();
 
   static const Map<int, Color> brandingPrimaryLuminance = {
-    50: Color.fromRGBO(59, 132, 240, .1),
-    100: Color.fromRGBO(59, 132, 240, .2),
-    200: Color.fromRGBO(59, 132, 240, .3),
-    300: Color.fromRGBO(59, 132, 240, .4),
-    400: Color.fromRGBO(59, 132, 240, .5),
-    500: Color.fromRGBO(59, 132, 240, .6),
-    600: Color.fromRGBO(59, 132, 240, .7),
-    700: Color.fromRGBO(59, 132, 240, .8),
-    800: Color.fromRGBO(59, 132, 240, .9),
-    90: Color.fromRGBO(59, 132, 240, 1),
+    50: Color.fromRGBO(224, 21, 59, .1),
+    100: Color.fromRGBO(224, 21, 59, .2),
+    200: Color.fromRGBO(224, 21, 59, .3),
+    300: Color.fromRGBO(224, 21, 59, .4),
+    400: Color.fromRGBO(224, 21, 59, .5),
+    500: Color.fromRGBO(224, 21, 59, .6),
+    600: Color.fromRGBO(224, 21, 59, .7),
+    700: Color.fromRGBO(224, 21, 59, .8),
+    800: Color.fromRGBO(224, 21, 59, .9),
+    900: Color.fromRGBO(224, 21, 59, 1),
   };
 
   static const MaterialColor brandingPrimaryMaterial = MaterialColor(0xff3B84F0, brandingPrimaryLuminance);
 
-  static const Color brandingPrimary = Color(0xff3B84F0);
-  static const Color brandingPrimaryAlt = Color(0xff3B84F0);
+  static const Color brandingPrimary = Color(0xffE0153B);
 
-  static const Color brandingSurfaceLight = Color(0xfff5f5f5);
-  static const Color brandingSurfaceDark = Color(0xff1b1b1b);
+  static const Color brandingBackgroundDark = Color(0xff121212);
+
+  static const Color brandingSurfaceLight = Color(0xffF8F9FE);
+  static const Color brandingSurfaceDark = Color(0xff222020);
 
   static final ThemeData lightTheme = ThemeData(
     visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -155,7 +156,7 @@ class AppTheme {
 
   static final ThemeData darkTheme = ThemeData(
     visualDensity: VisualDensity.adaptivePlatformDensity,
-    scaffoldBackgroundColor: Colors.black,
+    scaffoldBackgroundColor: brandingBackgroundDark,
     dialogTheme: DialogTheme(
       backgroundColor: brandingSurfaceDark,
       shape: RoundedRectangleBorder(
@@ -166,14 +167,14 @@ class AppTheme {
     accentColor: brandingPrimary,
     appBarTheme: const AppBarTheme(
       brightness: Brightness.dark,
-      color: Colors.black,
+      color: brandingBackgroundDark,
       elevation: 0,
       iconTheme: IconThemeData(
         color: Colors.white,
       ),
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: Colors.black,
+      backgroundColor: brandingBackgroundDark,
       selectedItemColor: Colors.white,
       unselectedItemColor: Color(0xFF424242),
       elevation: 0,
@@ -197,7 +198,7 @@ class AppTheme {
       //onPrimary: Colors.white,
       primaryVariant: brandingPrimary,
       secondary: Colors.blue.shade200,
-      background: Colors.black,
+      background: brandingBackgroundDark,
     ),
     cardTheme: CardTheme(
       color: brandingSurfaceDark,

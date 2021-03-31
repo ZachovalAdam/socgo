@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:provider/provider.dart';
 import 'package:socgo/globals.dart';
 import 'package:socgo/screens/sight.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -8,8 +10,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 class SightsScroller extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final currentPos = Provider.of<Position>(context);
+
     return StreamBuilder(
-        stream: getSightsData(),
+        stream: getNearSightsData(currentPos),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             var sights = snapshot.data.documents;
@@ -34,8 +38,7 @@ class SightsScroller extends StatelessWidget {
                                 Route r = MaterialPageRoute(
                                     builder: (context) => SightScreen(
                                           sight,
-                                          addr,
-                                          heroTagName: sight.id,
+                                          heroTagName: sight["id"],
                                         ));
                                 Navigator.push(context, r);
                               },
@@ -53,7 +56,7 @@ class SightsScroller extends StatelessWidget {
                                                 height: 300,
                                                 width: double.infinity,
                                                 child: Hero(
-                                                  tag: sight.id,
+                                                  tag: sight["id"],
                                                   child: ClipRRect(
                                                       borderRadius: BorderRadius.circular(20),
                                                       child: CachedNetworkImage(

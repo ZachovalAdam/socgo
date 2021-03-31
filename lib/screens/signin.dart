@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:socgo/globals.dart';
 import 'package:socgo/screens/create_account.dart';
 import 'package:socgo/services/authentication_service.dart';
 import 'package:provider/provider.dart';
@@ -36,26 +37,24 @@ class _SignInScreenState extends State<SignInScreen> {
               padding: EdgeInsets.all(20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
                     height: 20.0,
                   ),
-                  Container(
-                    width: 40,
-                    height: 40,
-                    child: Placeholder(),
+                  Center(
+                    child: Text("SocGo!", style: Theme.of(context).textTheme.headline5),
                   ),
                   SizedBox(
-                    height: 20.0,
+                    height: 175.0,
                   ),
-                  Text("Hey!", style: Theme.of(context).textTheme.headline4),
+                  Text("Welcome!", style: Theme.of(context).textTheme.headline4),
                   SizedBox(
                     height: 10.0,
                   ),
                   Text(
-                    "Sign in or create an account to begin your journey around the world!",
+                    "Ready to travel?",
                     style: Theme.of(context).textTheme.subtitle1,
-                    textAlign: TextAlign.center,
                   ),
                   SizedBox(
                     height: 30.0,
@@ -92,7 +91,44 @@ class _SignInScreenState extends State<SignInScreen> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        try {
+                          await auth.sendPasswordResetEmail(
+                            email: emailController.text.trim(),
+                          );
+                          await showDialog(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              title: Text("Success"),
+                              content: Text("We have sent an email to you with a link to reset your password."),
+                              actions: [
+                                FlatButton(
+                                  child: Text("Ok"),
+                                  onPressed: () => {
+                                    Navigator.pop(context, true),
+                                  },
+                                )
+                              ],
+                            ),
+                          );
+                        } catch (err) {
+                          await showDialog(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              title: Text("Error"),
+                              content: Text(err.message),
+                              actions: [
+                                FlatButton(
+                                  child: Text("Ok"),
+                                  onPressed: () => {
+                                    Navigator.pop(context, true),
+                                  },
+                                )
+                              ],
+                            ),
+                          );
+                        }
+                      },
                       child: Text("Forgot password?"),
                     ),
                   ),
@@ -138,26 +174,6 @@ class _SignInScreenState extends State<SignInScreen> {
                               backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.background),
                               foregroundColor: MaterialStateProperty.all<Color>(Theme.of(context).textTheme.headline1.color),
                             )),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                            Image.asset(
-                              "res/img/facebook_f.png",
-                              height: 20,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text("Facebook"),
-                          ]),
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF1877F2)),
-                            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                          ),
-                        ),
                       ),
                     ],
                   ),

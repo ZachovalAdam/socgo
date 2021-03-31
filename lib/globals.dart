@@ -54,29 +54,17 @@ Future createTrip(String sightId, String description, Timestamp tripDate, int pa
     'participants': [auth.currentUser.uid],
     'sight': sightId,
     'participantLimit': participantLimit,
-  });
-}
-
-Future createFriendRequest(String requestToId) async {
-  return await db.collection("requests").add({
-    'from': auth.currentUser.uid,
-    'to': requestToId,
-    'type': 'friend',
-  });
-}
-
-Future acceptFriendRequest(var request) async {
-  await db.collection("users").doc(request["to"]).update({
-    "friends": FieldValue.arrayUnion([request["from"]])
-  });
-  await db.collection("users").doc(request["from"]).update({
-    "friends": FieldValue.arrayUnion([request["to"]])
-  });
-  return await db.collection("requests").doc(request.id).delete();
-}
-
-Future denyFriendRequest(String requestId) async {
-  return await db.collection("requests").doc(requestId).delete();
+  }).then((t) async => {
+        await db.collection("chats").doc(t.id).set({
+          'trip': t.id,
+          'participants': [auth.currentUser.uid],
+          'messages': [],
+        }).then((c) async => {
+              await db.collection("chats").doc(t.id).update({
+                'id': t.id,
+              })
+            })
+      });
 }
 
 Future forceJoinTrip(String tripId) async {
@@ -98,28 +86,42 @@ Future deleteTrip(String tripId) async {
       await req.reference.delete();
     });
   });
-  return await db.collection("trips").doc(tripId).delete();
+  return await db.collection("trips").doc(tripId).delete().then((a) async => {await db.collection("chats").doc(tripId).delete()});
 }
 
 Future approveRequest(var request) async {
-  if (request["type"] == "friend") {
-    await db.collection("users").doc(request["from"]).update({
-      "friends": FieldValue.arrayUnion([request["to"]])
-    });
-    await db.collection("users").doc(request["to"]).update({
-      "friends": FieldValue.arrayUnion([request["from"]])
-    });
-    return await deleteRequest(request.id);
-  } else if (request["type"] == "trip") {
+  if (request["type"] == "trip") {
     await db.collection("trips").doc(request["tripId"]).update({
       "participants": FieldValue.arrayUnion([request["from"]])
-    });
+    }).then((t) async => {
+          await db.collection("chats").doc(request["tripId"]).update({
+            "participants": FieldValue.arrayUnion([request["from"]])
+          })
+        });
     return await deleteRequest(request.id);
   }
 }
 
 Future deleteRequest(String requestId) async {
   return await db.collection("requests").doc(requestId).delete();
+}
+
+Future deleteAccount(String userId) async {
+  await db.collection("users").doc(userId).delete();
+}
+
+Future createReview(String userId, String sightId, String review, double stars) async {
+  return await db.collection("sights").doc(sightId).update({
+    "reviews": FieldValue.arrayUnion([
+      {"date": new DateTime.now(), "rating": stars, "reviewer": userId, "text": review}
+    ])
+  });
+}
+
+Future deleteReview(String sightId, Map review) async {
+  await db.collection("sights").doc(sightId).update({
+    "reviews": FieldValue.arrayRemove([review])
+  });
 }
 
 Stream<QuerySnapshot> getPersonalRequests() {
@@ -147,9 +149,28 @@ Stream<QuerySnapshot> getSightsData() {
   return querySnapSights;
 }
 
+Stream<QuerySnapshot> getNearSightsData(location) {
+  Stream<QuerySnapshot> querySnapSights = db
+      .collection('sights')
+      .where("location", isGreaterThan: GeoPoint(location.latitude - 0.26997, location.longitude - 0.53994)) // roughly 30km away from location on -lat
+      .where("location", isLessThan: GeoPoint(location.latitude + 0.26997, location.longitude + 0.53994)) // roughly 30km away from location on +lat
+      .limit(20)
+      .snapshots();
+  return querySnapSights;
+}
+
 Stream<QuerySnapshot> getSightData(String sightId) {
   Stream<QuerySnapshot> querySnapSight = db.collection('sights').where("id", isEqualTo: sightId).snapshots();
   return querySnapSight;
+}
+
+Future getSearchData(String searchText) async {
+  return await db
+      .collection('sights')
+      .where("name", isGreaterThanOrEqualTo: searchText)
+      .where("name", isLessThanOrEqualTo: searchText + '\uf8ff') // have to include escape char for this firestore query to work as startsWith
+      .limit(20)
+      .get();
 }
 
 Stream<QuerySnapshot> getTripsData(String sightId) {

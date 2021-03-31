@@ -5,6 +5,8 @@ import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:socgo/globals.dart';
+import 'package:socgo/screens/chat.dart';
+import 'package:socgo/screens/menu_settings.dart';
 import 'package:socgo/screens/setup.dart';
 import 'package:socgo/services/authentication_service.dart';
 import 'package:socgo/widgets/random_sight.dart';
@@ -32,7 +34,7 @@ class Discover extends StatelessWidget {
                     future: getAddress(Coordinates(currentPos.latitude, currentPos.longitude)),
                     builder: (BuildContext locContext, locSnapshot) {
                       if (locSnapshot.hasData) {
-                        Address currentAddr = locSnapshot.data.first;
+                        // Address currentAddr = locSnapshot.data.first;
                         return StreamBuilder(
                             stream: getPersonalRequests(),
                             builder: (BuildContext reqContext, reqSnapshot) {
@@ -116,21 +118,6 @@ class Discover extends StatelessWidget {
                                                         ? ListTile(
                                                             leading: Container(
                                                               child: Icon(
-                                                                Icons.people_outlined,
-                                                                color: Theme.of(context).iconTheme.color,
-                                                              ),
-                                                              padding: EdgeInsets.only(left: 10),
-                                                            ),
-                                                            title: Text('Friends', style: TextStyle(color: Theme.of(context).textTheme.headline6.color)),
-                                                            onTap: () {
-                                                              print('friends');
-                                                            },
-                                                          )
-                                                        : Container(),
-                                                    isProfileSetup
-                                                        ? ListTile(
-                                                            leading: Container(
-                                                              child: Icon(
                                                                 Icons.tour_outlined,
                                                                 color: Theme.of(context).iconTheme.color,
                                                               ),
@@ -175,21 +162,24 @@ class Discover extends StatelessWidget {
                                                             },
                                                           )
                                                         : Container(),
-                                                    isProfileSetup
-                                                        ? ListTile(
-                                                            leading: Container(
-                                                              child: Icon(
-                                                                Icons.settings_outlined,
-                                                                color: Theme.of(context).iconTheme.color,
-                                                              ),
-                                                              padding: EdgeInsets.only(left: 10),
-                                                            ),
-                                                            title: Text('Settings', style: TextStyle(color: Theme.of(context).textTheme.headline6.color)),
-                                                            onTap: () {
-                                                              print('settings');
-                                                            },
-                                                          )
-                                                        : Container(),
+                                                    ListTile(
+                                                      leading: Container(
+                                                        child: Icon(
+                                                          Icons.settings_outlined,
+                                                          color: Theme.of(context).iconTheme.color,
+                                                        ),
+                                                        padding: EdgeInsets.only(left: 10),
+                                                      ),
+                                                      title: Text('Settings', style: TextStyle(color: Theme.of(context).textTheme.headline6.color)),
+                                                      onTap: () {
+                                                        Navigator.pop(context, true);
+                                                        Route r = MaterialPageRoute(
+                                                            builder: (context) => SettingsMenuScreen(
+                                                                  userData,
+                                                                ));
+                                                        Navigator.push(context, r);
+                                                      },
+                                                    ),
                                                     ListTile(
                                                       leading: Container(
                                                         child: Icon(
@@ -213,7 +203,11 @@ class Discover extends StatelessWidget {
                                           icon: Icon(FeatherIcons.messageCircle),
                                           onPressed: isProfileSetup
                                               ? () {
-                                                  Scaffold.of(context).showSnackBar(SnackBar(content: Text("This feature is not implemented yet.")));
+                                                  Route r = MaterialPageRoute(
+                                                      builder: (context) => ChatScreen(
+                                                            userData,
+                                                          ));
+                                                  Navigator.push(context, r);
                                                 }
                                               : null,
                                           constraints: BoxConstraints(minWidth: 70),
@@ -252,7 +246,7 @@ class Discover extends StatelessWidget {
                                                         SizedBox(
                                                           height: 40,
                                                         ),
-                                                        Text('Best in ' + currentAddr.locality, style: Theme.of(context).textTheme.headline5),
+                                                        Text('Sights near you', style: Theme.of(context).textTheme.headline5),
                                                       ],
                                                     ),
                                                   ),
@@ -273,7 +267,7 @@ class Discover extends StatelessWidget {
                                                     child: Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
-                                                        Text('Popular worldwide', style: Theme.of(context).textTheme.headline5),
+                                                        Text('Most rated worldwide', style: Theme.of(context).textTheme.headline5),
                                                       ],
                                                     ),
                                                   ),
@@ -293,8 +287,23 @@ class Discover extends StatelessWidget {
                               }
                             });
                       } else {
-                        return Center(
-                          child: CircularProgressIndicator(),
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(FeatherIcons.compass, size: 40),
+                            SizedBox(height: 15),
+                            Text(
+                              "We're searching for your location.",
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              "If this is taking too long, it's likely that the application won't function correctly in your area.",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.caption,
+                            ),
+                          ],
                         );
                       }
                     });
@@ -305,8 +314,20 @@ class Discover extends StatelessWidget {
               }
             },
           )
-        : Center(
-            child: CircularProgressIndicator(),
+        : Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 15),
+              Padding(
+                  child: Text(
+                    "You might need to allow location permissions for this app.",
+                    style: Theme.of(context).textTheme.subtitle1,
+                    textAlign: TextAlign.center,
+                  ),
+                  padding: EdgeInsets.all(25)),
+            ],
           );
   }
 }

@@ -103,7 +103,7 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(Moment.fromDate(selectedDate).format("EEEE, DD MMM yyyy"), style: Theme.of(context).textTheme.subtitle1),
+                                      Text(Moment.fromDate(selectedDate).format("EEEE, dd MMM yyyy"), style: Theme.of(context).textTheme.subtitle1),
                                       Row(
                                         children: [
                                           Container(width: 1, height: 20, color: Theme.of(context).textTheme.headline1.color.withOpacity(0.3)),
@@ -158,12 +158,12 @@ class _CreateTripScreenState extends State<CreateTripScreen> {
                               int participantsAmt = participantLimitController.text == "" ? 15 : int.parse(participantLimitController.text);
                               int finalParticipantsAmt = participantLimitController.text == "" ? (15 - 1) : (int.parse(participantLimitController.text) - 1);
                               var crTrContext = context;
-                              await createTrip(sight.id, descriptionController.text.trim(), Timestamp.fromDate(selectedDate), participantsAmt);
+                              await createTrip(sight["id"], descriptionController.text.trim(), Timestamp.fromDate(selectedDate), participantsAmt);
                               await showDialog(
                                   context: context,
                                   builder: (_) => AlertDialog(
                                         title: Text("Success"),
-                                        content: Text("Your made a trip! Congratulations. Up to " +
+                                        content: Text("Congratulations, you created a trip! Up to " +
                                             finalParticipantsAmt.toString() +
                                             " people can now send you requests to join your trip."),
                                         actions: [

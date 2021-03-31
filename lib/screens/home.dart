@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:socgo/widgets/discover.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:socgo/widgets/search.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -18,9 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static List<Widget> _widgetOptions = <Widget>[
     Discover(),
-    Text(
-      'Search',
-    ),
+    Search(),
   ];
   @override
   Widget build(BuildContext context) {

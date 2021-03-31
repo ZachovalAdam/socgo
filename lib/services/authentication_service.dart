@@ -65,7 +65,7 @@ class AuthenticationService {
 
       if (!isRegisteredInDBSnap.exists) {
         await DatabaseService(uid: currentUser.uid)
-            .updateUserData('', '', DateTime(2020), false, false, FirebaseAuth.instance.currentUser.photoURL, currentUser.uid, []);
+            .updateUserData('', '', DateTime(2020), false, false, FirebaseAuth.instance.currentUser.photoURL, currentUser.uid);
       }
 
       return "Success";
@@ -79,7 +79,7 @@ class AuthenticationService {
     try {
       UserCredential cred = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       User user = cred.user;
-      await DatabaseService(uid: user.uid).updateUserData('', '', DateTime(2020), false, false, "null", user.uid, []);
+      await DatabaseService(uid: user.uid).updateUserData('', '', DateTime(2020), false, false, "null", user.uid);
       return "Success";
     } on FirebaseAuthException catch (e) {
       return e.message;

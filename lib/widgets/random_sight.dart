@@ -40,8 +40,7 @@ class RandomSight extends StatelessWidget {
                             Route r = MaterialPageRoute(
                                 builder: (context) => SightScreen(
                                       randomSight,
-                                      addr,
-                                      heroTagName: randomSight.id + "_rand",
+                                      heroTagName: randomSight["id"] + "_rand",
                                     ));
                             Navigator.push(context, r);
                           },

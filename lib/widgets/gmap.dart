@@ -28,7 +28,7 @@ class _GMapState extends State<GMap> {
 
     setState(() {
       _markers.add(Marker(
-        markerId: MarkerId(sight.id.toString()),
+        markerId: MarkerId(sight["id"].toString()),
         position: LatLng(sight["location"].latitude, sight["location"].longitude),
       ));
     });

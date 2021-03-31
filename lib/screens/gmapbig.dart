@@ -28,7 +28,7 @@ class _GMapBigScreenState extends State<GMapBigScreen> {
 
     setState(() {
       _markers.add(Marker(
-          markerId: MarkerId(sight.id.toString()),
+          markerId: MarkerId(sight["id"].toString()),
           position: LatLng(sight["location"].latitude, sight["location"].longitude),
           infoWindow: InfoWindow(title: sight["name"], snippet: "Click the button in the bottom right corner to navigate.")));
     });

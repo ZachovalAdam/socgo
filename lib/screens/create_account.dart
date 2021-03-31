@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:socgo/services/authentication_service.dart';
 import 'package:provider/provider.dart';
 
@@ -35,26 +36,25 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
               padding: EdgeInsets.all(20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
                     height: 20.0,
                   ),
-                  Container(
-                    width: 40,
-                    height: 40,
-                    child: Placeholder(),
+                  Center(
+                    child: Text("SocGo!", style: Theme.of(context).textTheme.headline5),
                   ),
                   SizedBox(
-                    height: 20.0,
+                    height: 120.0,
                   ),
                   Text("Hey!", style: Theme.of(context).textTheme.headline4),
                   SizedBox(
                     height: 10.0,
                   ),
                   Text(
-                    "Sign in or create an account to begin your journey around the world!",
+                    "Create an account to begin your journey around the world!",
                     style: Theme.of(context).textTheme.subtitle1,
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.start,
                   ),
                   SizedBox(
                     height: 30.0,
@@ -83,56 +83,14 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   SizedBox(
                     height: 10.0,
                   ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text("Forgot password?"),
-                    ),
-                  ),
                   Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text("Google"),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text("Facebook"),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          context.read<AuthenticationService>().signUp(
-                                email: emailController.text.trim(),
-                                password: pwController.text.trim(),
-                              );
-                        },
-                        child: Text("Create account"),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          context
-                              .read<AuthenticationService>()
-                              .signIn(
-                                email: emailController.text.trim(),
-                                password: pwController.text.trim(),
-                              )
-                              .then((m) => {
+                        child: OutlinedButton(
+                            onPressed: () {
+                              context.read<AuthenticationService>().signInGoogle().then((m) => {
                                     if (m != "Success")
                                       {
                                         showDialog(
@@ -152,8 +110,64 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                         pwController.text = ""
                                       }
                                   });
+                            },
+                            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                              SvgPicture.asset(
+                                "res/img/google_g.svg",
+                                height: 20,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text("Google"),
+                            ]),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.background),
+                              foregroundColor: MaterialStateProperty.all<Color>(Theme.of(context).textTheme.headline1.color),
+                            )),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          context
+                              .read<AuthenticationService>()
+                              .signUp(
+                                email: emailController.text.trim(),
+                                password: pwController.text.trim(),
+                              )
+                              .then((m) => {
+                                    if (m != "Success")
+                                      {
+                                        showDialog(
+                                            context: context,
+                                            builder: (_) => AlertDialog(
+                                                  title: Text("Error while signing up"),
+                                                  content: Text(m),
+                                                  actions: [
+                                                    FlatButton(
+                                                      child: Text("Ok"),
+                                                      onPressed: () {
+                                                        Navigator.pop(context, true);
+                                                      },
+                                                    )
+                                                  ],
+                                                )),
+                                        pwController.text = ""
+                                      }
+                                    else
+                                      {
+                                        Navigator.pop(context, true),
+                                      }
+                                  });
                         },
-                        child: Text("Sign in"),
+                        child: Text("Sign up"),
                       ),
                     ],
                   ),

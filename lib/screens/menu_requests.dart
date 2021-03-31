@@ -56,135 +56,76 @@ class _RequestsMenuScreenState extends State<RequestsMenuScreen> {
                       ),
                       if (requests.length != 0)
                         for (var index = 0; index < requests.length; index++)
-                          requests[index]["type"] == "friend"
-                              ? StreamBuilder(
+                          StreamBuilder(
+                            stream: getTripData(requests[index]["tripId"]),
+                            builder: (trContext, trSnapshot) {
+                              if (trSnapshot.hasData) {
+                                var trip = trSnapshot.data;
+                                return StreamBuilder(
                                   stream: getUserData(requests[index]["from"]),
-                                  builder: (frContext, frSnapshot) {
-                                    if (frSnapshot.hasData) {
-                                      var user = frSnapshot.data.documents[0];
-                                      return Material(
-                                        type: MaterialType.transparency,
-                                        child: ListTile(
-                                          title: Padding(
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text("Friend request",
-                                                    style:
-                                                        TextStyle(fontWeight: FontWeight.w600, fontSize: 12, color: Theme.of(context).textTheme.caption.color)),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Text(user["firstName"] + " " + user["lastName"] + " would like to become your friend."),
-                                              ],
-                                            ),
-                                            padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
-                                          ),
-                                          trailing: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              IconButton(
-                                                icon: Icon(
-                                                  FeatherIcons.x,
-                                                  color: Colors.redAccent,
-                                                ),
-                                                onPressed: () {
-                                                  denyFriendRequest(requests[index].id);
-                                                },
-                                              ),
-                                              IconButton(
-                                                icon: Icon(FeatherIcons.check, color: Colors.greenAccent),
-                                                onPressed: () {
-                                                  acceptFriendRequest(requests[index]);
-                                                },
-                                              )
-                                            ],
-                                          ),
-                                          onTap: () {
-                                            // open profile
-                                          },
-                                        ),
-                                      );
-                                    } else {
-                                      return Container();
-                                    }
-                                  },
-                                )
-                              : StreamBuilder(
-                                  stream: getTripData(requests[index]["tripId"]),
-                                  builder: (trContext, trSnapshot) {
-                                    if (trSnapshot.hasData) {
-                                      var trip = trSnapshot.data;
+                                  builder: (trReqContext, trReqSnapshot) {
+                                    if (trReqSnapshot.hasData) {
+                                      var user = trReqSnapshot.data.documents[0];
                                       return StreamBuilder(
-                                        stream: getUserData(requests[index]["from"]),
-                                        builder: (trReqContext, trReqSnapshot) {
-                                          if (trReqSnapshot.hasData) {
-                                            var user = trReqSnapshot.data.documents[0];
+                                        stream: getSightData(trip["sight"]),
+                                        builder: (sContext, sSnapshot) {
+                                          if (sSnapshot.hasData) {
+                                            var sight = sSnapshot.data.documents[0];
                                             return StreamBuilder(
-                                              stream: getSightData(trip["sight"]),
-                                              builder: (sContext, sSnapshot) {
-                                                if (sSnapshot.hasData) {
-                                                  var sight = sSnapshot.data.documents[0];
-                                                  return StreamBuilder(
-                                                    stream: getTripParticipantsData(trip["participants"]),
-                                                    builder: (trPartContext, trPartSnapshot) {
-                                                      if (trPartSnapshot.hasData) {
-                                                        var participants = trPartSnapshot.data.documents;
-                                                        return Material(
-                                                          type: MaterialType.transparency,
-                                                          child: ListTile(
-                                                            title: Padding(
-                                                              padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
-                                                              child: Column(
-                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                children: [
-                                                                  Text("Trip request",
-                                                                      style: TextStyle(
-                                                                          fontWeight: FontWeight.w600,
-                                                                          fontSize: 12,
-                                                                          color: Theme.of(context).textTheme.caption.color)),
-                                                                  SizedBox(
-                                                                    height: 5,
-                                                                  ),
-                                                                  Text(user["firstName"] +
-                                                                      " " +
-                                                                      user["lastName"] +
-                                                                      " would like to join your trip to " +
-                                                                      sight["name"] +
-                                                                      "."),
-                                                                ],
-                                                              ),
+                                              stream: getTripParticipantsData(trip["participants"]),
+                                              builder: (trPartContext, trPartSnapshot) {
+                                                if (trPartSnapshot.hasData) {
+                                                  var participants = trPartSnapshot.data.documents;
+                                                  return Material(
+                                                    type: MaterialType.transparency,
+                                                    child: ListTile(
+                                                      title: Padding(
+                                                        padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
+                                                        child: Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            Text("Trip request",
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.w600,
+                                                                    fontSize: 12,
+                                                                    color: Theme.of(context).textTheme.caption.color)),
+                                                            SizedBox(
+                                                              height: 5,
                                                             ),
-                                                            trailing: Row(
-                                                              mainAxisSize: MainAxisSize.min,
-                                                              children: [
-                                                                IconButton(
-                                                                  icon: Icon(
-                                                                    FeatherIcons.x,
-                                                                    color: Colors.redAccent,
-                                                                  ),
-                                                                  onPressed: () {
-                                                                    deleteRequest(requests[index].id);
-                                                                  },
-                                                                ),
-                                                                IconButton(
-                                                                  icon: Icon(FeatherIcons.check, color: Colors.greenAccent),
-                                                                  onPressed: () {
-                                                                    approveRequest(requests[index]);
-                                                                  },
-                                                                )
-                                                              ],
+                                                            Text(user["firstName"] +
+                                                                " " +
+                                                                user["lastName"] +
+                                                                " would like to join your trip to " +
+                                                                sight["name"] +
+                                                                "."),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      trailing: Row(
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: [
+                                                          IconButton(
+                                                            icon: Icon(
+                                                              FeatherIcons.x,
+                                                              color: Colors.redAccent,
                                                             ),
-                                                            onTap: () {
-                                                              Route r = MaterialPageRoute(builder: (context) => TripScreen(trip, participants, sight.id));
-                                                              Navigator.push(context, r);
+                                                            onPressed: () {
+                                                              deleteRequest(requests[index].id);
                                                             },
                                                           ),
-                                                        );
-                                                      } else {
-                                                        return Container();
-                                                      }
-                                                    },
+                                                          IconButton(
+                                                            icon: Icon(FeatherIcons.check, color: Colors.greenAccent),
+                                                            onPressed: () {
+                                                              approveRequest(requests[index]);
+                                                            },
+                                                          )
+                                                        ],
+                                                      ),
+                                                      onTap: () {
+                                                        Route r = MaterialPageRoute(builder: (context) => TripScreen(trip, participants, sight["id"]));
+                                                        Navigator.push(context, r);
+                                                      },
+                                                    ),
                                                   );
                                                 } else {
                                                   return Container();
@@ -200,7 +141,12 @@ class _RequestsMenuScreenState extends State<RequestsMenuScreen> {
                                       return Container();
                                     }
                                   },
-                                )
+                                );
+                              } else {
+                                return Container();
+                              }
+                            },
+                          )
                       else
                         Container(child: Text("You have no requests.")),
                     ],

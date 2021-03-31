@@ -95,10 +95,9 @@ class _TripScreenState extends State<TripScreen> {
                                                       child: Column(
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
-                                                          for (var i = 0; i < (participants.length >= 7 ? 7 : participants.length); i++)
+                                                          for (var i = 0; i < participants.length; i++)
                                                             Padding(
-                                                              padding: EdgeInsets.only(
-                                                                  bottom: i != (participants.length >= 7 ? 7 : participants.length) - 1 ? 15 : 0),
+                                                              padding: EdgeInsets.only(bottom: i != participants.length - 1 ? 15 : 0),
                                                               child: Row(
                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                 children: [
@@ -151,13 +150,6 @@ class _TripScreenState extends State<TripScreen> {
                                                           SizedBox(
                                                             height: 10,
                                                           ),
-                                                          participants.length > 10 ? Divider() : Container(),
-                                                          participants.length > 10
-                                                              ? FlatButton(
-                                                                  child: Text("Show more"),
-                                                                  onPressed: () {},
-                                                                )
-                                                              : Container(),
                                                           tripRequests.length > 0
                                                               ? Text(
                                                                   tripRequests.length.toString() + " pending join requests.",
