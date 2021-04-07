@@ -14,6 +14,7 @@ import 'package:socgo/widgets/sights_scroller.dart';
 import 'package:socgo/widgets/greeting.dart';
 import 'package:socgo/widgets/info_panel.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:socgo/widgets/sights_scroller_rated.dart';
 import 'package:socgo/widgets/user_button.dart';
 import 'package:socgo/screens/menu_trips.dart';
 import 'package:socgo/screens/menu_requests.dart';
@@ -272,6 +273,10 @@ class Discover extends StatelessWidget {
                                                     ),
                                                   ),
                                                 ),
+                                                SizedBox(
+                                                  height: 15,
+                                                ),
+                                                SightsScrollerRated(),
                                                 SizedBox(
                                                   height: 50,
                                                 ),
