@@ -88,10 +88,19 @@ class _SettingsMenuScreenState extends State<SettingsMenuScreen> {
                                         FlatButton(
                                           child: Text("Yes"),
                                           onPressed: () {
-                                            deleteAccount(userData["id"]);
-                                            auth.currentUser.delete();
-                                            Navigator.pop(settingsContext, true);
-                                            Navigator.pop(context, true);
+                                            try {
+                                              deleteAccount(userData["id"]);
+                                              auth.currentUser.delete();
+                                              Navigator.pop(settingsContext, true);
+                                              Navigator.pop(context, true);
+                                            } catch (err) {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (_) => AlertDialog(
+                                                        title: Text("An error has occured"),
+                                                        content: Text(err.message),
+                                                      ));
+                                            }
                                           },
                                         ),
                                       ],
