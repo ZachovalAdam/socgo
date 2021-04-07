@@ -115,13 +115,21 @@ Future createReview(String userId, String sightId, String review, double stars) 
     "reviews": FieldValue.arrayUnion([
       {"date": new DateTime.now(), "rating": stars, "reviewer": userId, "text": review}
     ])
-  });
+  }).then((r) async => {
+        await db.collection("sights").doc(sightId).update({
+          "reviewCount": FieldValue.increment(1),
+        })
+      });
 }
 
 Future deleteReview(String sightId, Map review) async {
   await db.collection("sights").doc(sightId).update({
     "reviews": FieldValue.arrayRemove([review])
-  });
+  }).then((r) async => {
+        await db.collection("sights").doc(sightId).update({
+          "reviewCount": FieldValue.increment(-1),
+        })
+      });
 }
 
 Stream<QuerySnapshot> getPersonalRequests() {
@@ -156,6 +164,11 @@ Stream<QuerySnapshot> getNearSightsData(location) {
       .where("location", isLessThan: GeoPoint(location.latitude + 0.26997, location.longitude + 0.53994)) // roughly 30km away from location on +lat
       .limit(20)
       .snapshots();
+  return querySnapSights;
+}
+
+Stream<QuerySnapshot> getMostRatedSightsData() {
+  Stream<QuerySnapshot> querySnapSights = db.collection('sights').orderBy('reviewCount', descending: true).limit(20).snapshots();
   return querySnapSights;
 }
 
